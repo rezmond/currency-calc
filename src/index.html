@@ -29,19 +29,37 @@
     <div hidden id="search-area">
       <form id="search-form">
         <div class="mdl-textfield mdl-js-textfield">
-          <input list="currency-codes" class="mdl-textfield__input" type="text" name="currency-code-from" id="currency-code-from">
+          <input
+            id="currency-code-from"
+            list="currency-codes"
+            class="mdl-textfield__input"
+            type="text"
+            name="currency-code-from"
+          >
           <label class="mdl-textfield__label" for="currency-code-from">Currency code from</label>
           <span class="mdl-textfield__error">Incorrect currency code!</span>
           <datalist id="currency-codes">
           </datalist>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input class="mdl-textfield__input" type="text" pattern="[0-9]*(\.[0-9]+)?" name="value" id="value" max="100">
+          <input
+            id="value"
+            class="mdl-textfield__input"
+            type="text"
+            pattern="[0-9]*(\.[0-9]+)?"
+            name="value"
+          >
           <label class="mdl-textfield__label" for="sample1">Value from</label>
           <span class="mdl-textfield__error">Input is not a number!</span>
         </div>
         <div class="mdl-textfield mdl-js-textfield">
-          <input list="currency-codes" class="mdl-textfield__input" type="text" name="currency-code-to" id="currency-code-to">
+          <input
+            id="currency-code-to"
+            list="currency-codes"
+            class="mdl-textfield__input"
+            type="text"
+            name="currency-code-to"
+          >
           <label class="mdl-textfield__label" for="currency-code-to">Currency code to</label>
           <span class="mdl-textfield__error">Incorrect currency code!</span>
           <datalist id="currency-codes">
@@ -84,10 +102,15 @@
       const data = await apiCall(url.toString());
       const rate = Number(data[currencyTo].value);
       return rate * value;
+      return 20;
     }
 
     const handleSubmit = async (e) => {
       e.preventDefault();
+
+      if(!e.target.checkValidity()) {
+        return;
+      }
 
       const formData = new FormData(e.target);
       const result = await convert(
